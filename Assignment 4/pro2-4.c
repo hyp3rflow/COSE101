@@ -10,10 +10,10 @@ int main(void){
     scanf("%d", &input);
 
     if(100000 <= input && input <= 999999){
-    break;
+      break;
     }
     else{
-    printf("Input Error!\n");
+      printf("Input Error!\n");
     }
   }
 
@@ -25,15 +25,18 @@ int main(void){
 void i_to_a(input){
   if (input != 0){
     int a = input%100;
+    
     if (a>= 0 && a<=25){
-  i_to_a(input/100);
+      i_to_a(input/100);
       printf("%c ", a+65);
     }
     else{
-  i_to_a(input/100);
-      printf("%c ", (a%26)+65);
+      i_to_a(input/100);
+      printf("%c ", (a%26) + 65);
     }
+  
   }
+  
   else{
     printf("%c", input);
   }

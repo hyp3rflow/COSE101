@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void gcd(int a, int b);
+int gcd(int a, int b);
 
 int main(void){
   int a, b;
@@ -18,11 +18,13 @@ int main(void){
   return 0;
 }
 
-void gcd(int a, int b){
+int gcd(int a, int b){
 
   if(b!=0){
     return gcd(b, a%b);
   }
-  else{return a;}
+  else{
+    return a;
+  }
 
 }

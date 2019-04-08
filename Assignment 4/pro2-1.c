@@ -14,11 +14,9 @@ int main(void){
 }
 
 void reverse(unsigned a){
-  unsigned b = a/10;
 
-  printf("%d", a%10);
-
-  if (0<a){
-  reverse(a);
+  if ( 0 < a ){
+    printf("%d", a%10);
+    reverse(a/10);
   }
 }
