@@ -1,3 +1,6 @@
+// KU ComputerProgramming I
+// 20180423 1st Midterm 4th problem
+
 #include <stdio.h>
 
 int bool(int a){

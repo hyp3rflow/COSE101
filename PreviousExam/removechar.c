@@ -1,3 +1,6 @@
+// KU ComputerProgramming I
+// 20180423 1st Midterm 6th problem
+
 #include <stdio.h>
 
 int len(char str[]){

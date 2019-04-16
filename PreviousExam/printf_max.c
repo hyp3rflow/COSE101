@@ -1,3 +1,6 @@
+// KU ComputerProgramming I
+// 20180521 2nd Midterm 5th problem
+
 #include <stdio.h>
 
 long long factorial(int n){

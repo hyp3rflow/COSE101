@@ -1,3 +1,6 @@
+// KU ComputerProgramming I
+// 20160511 2nd Midterm 4th problem
+
 #include<stdio.h>
 
 int is_palin(int num){

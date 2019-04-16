@@ -1,3 +1,6 @@
+// KU ComputerProgramming I
+// 20180521 2nd Midterm 1th problem
+
 #include <stdio.h>
 int x = 10;
 int f(){

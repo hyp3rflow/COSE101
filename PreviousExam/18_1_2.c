@@ -1,3 +1,6 @@
+// KU ComputerProgramming I
+// 20180423 1st Midterm 2nd problem
+
 #include <stdio.h>
 
 int x = 10;

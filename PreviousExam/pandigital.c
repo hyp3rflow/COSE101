@@ -1,3 +1,6 @@
+// KU ComputerProgramming I
+// 20160511 2nd Midterm 5th problem
+
 #include <stdio.h>
 
 int is_pandigital(int n){
