@@ -13,16 +13,11 @@ int is_prime(int num){
 }
 
 int closest_prime(int n){
-  if(is_prime(n))
-    return 0;
+  if(is_prime(n)) return 0;
   else{
-    int next_prime, prev_prime;
-    for(next_prime = n+1; !(is_prime(next_prime)); next_prime++);
-    for(prev_prime = n-1; !(is_prime(prev_prime)); prev_prime--);
-    if(next_prime-n < n-prev_prime){
-      return next_prime-n;
-    }
-    return n-prev_prime;
+    for(int next_prime = n+1; !(is_prime(next_prime)); next_prime++);
+    for(int prev_prime = n-1; !(is_prime(prev_prime)); prev_prime--);
+    next_prime-n < n-prev_prime ? return next_prime-n : return n-prev_prime;
   }
 }
 

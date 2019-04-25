@@ -1,4 +1,4 @@
-..// KU Computer Programming I
+// KU Computer Programming I 
 // 20180423 1st Midterm 7th problem
 
 #include <stdio.h>
@@ -24,21 +24,13 @@ int main(void){
 }
 
 int mystery(int n, int val){
-  int p = 1, num;
-  int min = 1;
-  for(int cnt = 0; cnt < 32; cnt++){
-    for(int i = 0; i<cnt; i++){
-      p*=2;
-      num = p;
+  for(int num = 1, p = 0; p<32; p++, num *= 2){
+    int tmp = num;
+    for(int i = 0; i < n-1; i++){
+      tmp /= 10;
     }
-    for(int j=1; j<n; j++){
-      p/=10;
-    }
-    if(p <= 0){
-      p = 1;
-      continue;
-    }
-    if(p%10==val){
+    if(tmp == 0) continue;
+    if(tmp % 10 == val){
       return num;
     }
   }
