@@ -1,30 +1,30 @@
 #include <stdio.h>
-#include <math.h>
+#include <time.h>
 #include <stdlib.h>
 
-
 int main(){
-  int array[16];
-  int tmp = 0;
-  for(int i=0; i<16; i++){
-    array[i] = rand()%20+1;
-    while(1){
-      for(int j=-1; i+j>=0; j--){
-        if(array[i+j] == array[i]){
-          tmp++;
-        }
+  srand((unsigned)time(NULL));
+
+  int array[20];
+  int size = 0;
+
+  for(int i=0; i<20; i++){
+    int tmp = rand()%20 + 1;
+    int cnt = 0;
+    for(int n=0; n<i; n++){
+      if(tmp == array[n]){
+        cnt++;
       }
-      if(tmp != 0){
-        array[i] = rand()%20+1;
-        tmp = 0;
-      }
-      else if(tmp == 0){
-        break;
-      }
+    }
+    if(cnt == 0){
+      array[size] = tmp;
+      size++;
     }
   }
 
-  for(int i=0; i<16; i++){
-    printf("Array[ %d ] = %d\n", i, array[i]);
+  for(int k=0; k<size; k++){
+    printf("Array[ %d ] = %d\n", k, array[k]);
   }
+
+  return 0;
 }
