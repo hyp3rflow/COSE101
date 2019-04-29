@@ -75,6 +75,7 @@ int main(){
         printf("└─────────────────────────────────────────────────┘ \n");
         
         scanf("%d", &intinput);
+        if(getchar() != '\n') continue;
         
         switch(intinput){
             case 1:
@@ -106,7 +107,6 @@ int main(){
                 break;
                 
             default:
-                while(getchar() != '\n');
                 continue;
                 break;
         }
