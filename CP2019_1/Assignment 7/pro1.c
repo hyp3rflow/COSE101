@@ -2,8 +2,9 @@
 #include <stdlib.h>
 
 int main(){
-  char *str;
+  char str[6];
   int sum = 0;
+
   for(int i = 0; i<4; i++){
     printf("Enter an integer string: ");
     scanf("%s", str);

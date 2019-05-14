@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 int main(){
-  char str[50];
+  char str[80];
   int arr[26] = {0};
 
   printf("Enter three lines of text:\n");
   
   for(int i=0; i<3; i++){
-    fgets(str, 100, stdin);
+    fgets(str, 80, stdin);
+    for(char *ptr = str; *ptr != '\n'; ptr++){
+      *ptr = tolower(*ptr);
+    }
     for(int chr='a'; chr<'z'+1; chr++){
       while(strchr(str, chr) != NULL){
         arr[chr-'a']++;
         *strchr(str, chr) = '#';
-      }
-      while(strchr(str, chr-'a'+'A') != NULL){
-        arr[chr-'a']++;
-        *strchr(str, chr-'a'+'A') = '#';
       }
     }
   }
