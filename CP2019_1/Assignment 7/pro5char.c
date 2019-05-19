@@ -15,7 +15,7 @@ int main(){
         
         ptr = arr;
         while(*ptr){
-            if(!(isalpha(*ptr) || *ptr == ' ')){
+            if(!isalpha(*ptr)){
                 *ptr = ' ';
             }
             ptr++;
