@@ -1,15 +1,26 @@
 #include <stdio.h>
 #include <limits.h>
 
-int main(){
-  unsigned short input1, input2;
-  unsigned short rnput1, rnput2;
-  unsigned result;
+void power2(unsigned short num, unsigned short pow);
 
+int main(){
+  unsigned short inp1, inp2;
+  
   printf("Enter two integers: ");
-  scanf("%hd %hd", &input1, &input2);
-  rnput1 = input1;
-  rnput2 = input2;
+  scanf("%hd %hd", &inp1, &inp2);
+  
+  power2(inp1, inp2);
+
+  return 0;
+}
+
+void power2(unsigned short num, unsigned short pow){
+  unsigned short input1 = num;
+  unsigned short input2 = pow;
+  unsigned short rnput1 = num;
+  unsigned short rnput2 = pow;
+
+  unsigned short result;
 
   printf("number:\n");
   printf("%7d = ", rnput1);
@@ -52,5 +63,4 @@ int main(){
     result <<= 1;
   }
 
-  return 0;
 }
