@@ -29,6 +29,7 @@ void func1(Grade cgd[]);
 void func2(Grade cgd[]);
 void func3(Grade cgd[], Report rep[]);
 void func4(Grade cgd[]);
+void median(Grade cgd[], Report rep[]);
 
 int main(){
 
@@ -163,6 +164,8 @@ void func3(Grade cgd[], Report rep[]){
   rep[AVE].term_project /= cnt;
   rep[AVE].total_score /= cnt;
 
+  median(cgd, rep);
+
   printf("         Class report\n");  
   printf("================================\n");
   printf(" Field        Average | Median\n");
@@ -203,5 +206,63 @@ void func4(Grade cgd[]){
   while(input != 1) {
     printf("Enter 1 to Go Back : ");
     scanf("%d", &input);
+  }
+}
+
+void median(Grade cgd[], Report rep[]){
+  Grade tmp[79];
+  for(int i = 0; i < cnt; i++){
+    tmp[i].attendance = cgd[i].attendance;
+    tmp[i].assignment = cgd[i].assignment;
+    tmp[i].midterm_exam = cgd[i].midterm_exam;
+    tmp[i].final_exam = cgd[i].final_exam;
+    tmp[i].term_project = cgd[i].term_project;
+    tmp[i].total_score = cgd[i].total_score;
+  }
+  for(int j=0; j<cnt-1; j++){
+    for(int i=0; i<cnt-1; i++){
+      if(tmp[i].attendance > tmp[i+1].attendance){
+        int tmpnum = tmp[i].attendance;
+        tmp[i].attendance = tmp[i+1].attendance;
+        tmp[i+1].attendance = tmpnum;
+      }
+      if(tmp[i].assignment > tmp[i+1].assignment){
+        int tmpnum = tmp[i].assignment;
+        tmp[i].assignment = tmp[i+1].assignment;
+        tmp[i+1].assignment = tmpnum;
+      }
+      if(tmp[i].midterm_exam > tmp[i+1].midterm_exam){
+        int tmpnum = tmp[i].midterm_exam;
+        tmp[i].midterm_exam = tmp[i+1].midterm_exam;
+        tmp[i+1].midterm_exam = tmpnum;
+      }
+      if(tmp[i].final_exam > tmp[i+1].final_exam){
+        int tmpnum = tmp[i].final_exam;
+        tmp[i].final_exam = tmp[i+1].final_exam;
+        tmp[i+1].final_exam = tmpnum;
+      }
+      if(tmp[i].total_score > tmp[i+1].total_score){
+        int tmpnum = tmp[i].total_score;
+        tmp[i].total_score = tmp[i+1].total_score;
+        tmp[i+1].total_score = tmpnum;
+      }
+    }
+  }
+
+  int medcnt = (cnt-1)/2;
+
+  if((cnt-1)%2){
+    rep[MED].attendance = (tmp[medcnt].attendance + tmp[medcnt+1].attendance) / 2;
+    rep[MED].assignment = (tmp[medcnt].assignment + tmp[medcnt+1].assignment) / 2;
+    rep[MED].midterm_exam = (tmp[medcnt].midterm_exam + tmp[medcnt+1].midterm_exam) / 2;
+    rep[MED].final_exam = (tmp[medcnt].final_exam + tmp[medcnt+1].final_exam) / 2;
+    rep[MED].total_score = (tmp[medcnt].total_score + tmp[medcnt+1].total_score) / 2;
+  }
+  else{
+    rep[MED].attendance = tmp[medcnt].attendance;
+    rep[MED].assignment = tmp[medcnt].assignment;
+    rep[MED].midterm_exam = tmp[medcnt].midterm_exam;
+    rep[MED].final_exam = tmp[medcnt].final_exam;
+    rep[MED].total_score = tmp[medcnt].total_score;
   }
 }
