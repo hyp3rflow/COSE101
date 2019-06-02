@@ -65,7 +65,8 @@ int isStageEnd();  // 스테이지가 끝났는지 체크. (스테이지 클리�
 void setGameFlow(int type); // 각 스테이지에 맞는 게임 환경 세팅.   Setting up status values for each stages.
 
 
-int scorecnt = 0;
+
+
 int time_interval_moveBlockDown = 100;
 int goal = 64;
 int currentStage = 0;
@@ -88,40 +89,7 @@ void main(){
         }
         moveBlock(DOWN);
         if (!block.isactive || !block2.isactive) { // 이 부분은 떨어지는 블록이 바닥이나 다른블록에 닿았는지 체크합니다. This statement is cheking that wether the falling blocks got touched by floor or other blocks.
-          if(!block.isactive && block2.isactive){
-            for(int i=1; block2.pos_x - i >= 0; i--){
-              if(gameScreen[block2.pos_x-i][block2.pos_y]){
-                gameScreen[block2.pos_x-i+1][block2.pos_y] = gameScreen[block2.pos_x][block2.pos_y];
-                gameScreen[block2.pos_x][block2.pos_y] = 0;
-                block2.pos_x = block2.pos_x-i+1;
-                break;
-              }
-              if(block2.pos_x-i == 0){
-                gameScreen[0][block2.pos_y] = gameScreen[block2.pos_x][block2.pos_y];
-                gameScreen[block2.pos_x][block2.pos_y] = 0;
-                block2.pos_x = 0;
-              }
-            }
-            block2.inactive = 0;
-          } 
-          else if(block.inactive && !block2.inactive){
-            for(int i=1; block.pos_x - i >= 0; i--){
-              if(gameScreen[block.pos_x-i][block.pos_y]){
-                gameScreen[block.pos_x-i+1][block.pos_y] = gameScreen[block.pos_x][block.pos_y];
-                gameScreen[block.pos_x][block.pos_y] = 0;
-                block.pos_x = block.pos_x-i+1;
-                break;
-              }
-              if(block.pos_x-i == 0){
-                gameScreen[0][block.pos_y] = gameScreen[block.pos_x][block.pos_y];
-                gameScreen[block.pos_x][block.pos_y] = 0;
-                block.pos_x = 0;
-              }
-            }
-            block.inactive = 0;
-          }
-          
-          checkNumber(block.pos_x, block.pos_y);
+            checkNumber(block.pos_x, block.pos_y);
             if (isStageEnd() != 1)
                 newBlock();
         }
@@ -254,10 +222,6 @@ int takeBlockControl() {
                         incnt++;
                       }
                     }
-                    //점수 주는거 맞나??
-                    //
-                    score += 5;
-
                     break;
                 case P:
                 case p:
@@ -355,29 +319,22 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수        Che
      
      */
 
-  for(int i=0; i<Y; i++){
-    for(int j=x; j<X; j++){
-      if(gameScreen[j][i]) continue;
-      for(int k=j+1; k<X; k++){
-        if(gameScreen[k][i]){
-          gameScreen[j][i] = gameScreen[k][i];
-          gameScreen[k][i] = 0;
-          break;
+    for(int i = 0; i<Y; i++){
+      for(int j = x; j<X; j++){
+        if(gameScreen[i][j]) continue;
+        for(int k = j+1; k<X; k++){
+          if(gameScreen[i][k]){
+            gameScreen[i][k-1] = gameScreen[i][k];
+            gameScreen[i][k] = 0;
+          }
         }
       }
-    }
-  }
-  //horizontal first
-    if(y > 0 && y < Y-1){
-      if(gameScreen[x][y] % 2){
-        if(gameScreen[x][y-1] % 2 == 0 && gameScreen[x][y+1] % 2 == 0 && gameScreen[x][y-1] != 0 && gameScreen[x][y+1] != 0){
-          // double merge exception
-          //
-          if(y == 1 && gameScreen[x][y+2] % 2 && gameScreen[x][y+3] % 2 == 0 && gameScreen[x][y+3] != 0){
-            if(gameScreen[x][y+2] == '+' && gameScreen[x][y] == '-'){
-              checkAdjacentBlock(x, y+2);
-            }
-          }
+    }  
+
+    //horizontal First
+    if(y > 0 && y < Y){
+      if(gameScreen[x][y] % 2 && gameScreen[x][y] != '*'){
+        if(gameScreen[x][y-1] % 2 == 0 && gameScreen[x][y+1] % 2 == 0){
           if(gameScreen[x][y] == '+'){
             gameScreen[x][y-1] += gameScreen[x][y+1];
           }
@@ -386,17 +343,13 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수        Che
           }
           gameScreen[x][y] = 0;
           gameScreen[x][y+1] = 0;
-          if(gameScreen[x][y-1] == 0){
+         
+          if(!gameScreen[x][y-1]){
             gameScreen[x][y-1] = '*';
           }
-          if(gameScreen[x][y-1] == goal){
-            if(scorecnt){
-              score += 10;
-            }
-            scorecnt++;
-            gameScreen[x][y-1] = 0;
-          }
-
+          printGameScreen();
+          Sleep(200);
+          
           checkAdjacentBlock(x,y);
 
           return 1;
@@ -404,9 +357,9 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수        Che
       }
     }
 
-    if(x > 0 && x < X-1){
-      if(gameScreen[x][y] % 2){
-        if(gameScreen[x-1][y] % 2 == 0 && gameScreen[x+1][y] % 2 == 0 && gameScreen[x-1][y] != 0 && gameScreen[x+1][y] != 0){
+    if(x > 0 && x < X){
+      if(gameScreen[x][y] % 2 && gameScreen[x][y] != '*'){
+        if(gameScreen[x-1][y] % 2 == 0 && gameScreen[x+1][y] % 2 == 0){
           if(gameScreen[x][y] == '+'){
             gameScreen[x+1][y] += gameScreen[x-1][y];
           }
@@ -415,16 +368,13 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수        Che
           }
           gameScreen[x][y] = 0;
           gameScreen[x-1][y] = 0;
-          if(gameScreen[x+1][y] == 0){
+
+          if(!gameScreen[x+1][y]){
             gameScreen[x+1][y] = '*';
           }
-          if(gameScreen[x+1][y] == goal){
-            if(scorecnt){
-              score += 10;
-            }
-            scorecnt++;
-            gameScreen[x][y-1] = 0;
-          }
+
+          printGameScreen();
+          Sleep(200);
 
           checkAdjacentBlock(x,y);
 
@@ -462,7 +412,6 @@ void setGameFlow(int setGameFlowType) { // Implement this function to set condit
             
             currentStage = 0;
             score = 0;
-            scorecnt = 0;
             
         case 1: /* To next stage */
             currentStage++;
@@ -499,7 +448,7 @@ void setGameFlow(int setGameFlowType) { // Implement this function to set condit
             
         default:
             clearScreen();
-            setCoordinate(MAP_ADJ_X + 2, MAP_ADJ_Y + 13); printf(" @System error: state end condition corrupted.");
+            setCoordinate(MAP_ADJ_X + 2, MAP_ADJ_Y + 13); printf(" @System error: state end condition currupted.");
             exit(0);
     }
 }
@@ -508,7 +457,6 @@ int isStageEnd() { // 스테이지가 끝났는지 체크      Checking if stage
     for (int i = X - 1; i > 1; i--) {
         for (int j = 0; j < Y; j++) {
             if (score >= goal) {
-              scorecnt = 0;
                 currentStage < 10 ? printEndScreen(1) : printEndScreen(2);
                 return 1;
             }
@@ -516,8 +464,7 @@ int isStageEnd() { // 스테이지가 끝났는지 체크      Checking if stage
     }
     for (int i = 0; i < Y; i++) {
         if (gameScreen[0][i] != 0) { //패배            Game over
-          scorecnt = 0;  
-          printEndScreen(0);
+            printEndScreen(0);
             return 1;
         }
     }
